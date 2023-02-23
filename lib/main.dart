@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mymoviesapp/Presentation/Home/HomeScreen.dart';
+import 'package:mymoviesapp/Presentation/Theme/Theme.dart';
 
 void main(){
   runApp(MyApp());
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
         HomeScreen.routeName : (_) => HomeScreen(),
       },
       initialRoute:HomeScreen.routeName ,
+      theme: MyTheme.theme,
     );
   }
 }
