@@ -24,7 +24,15 @@ class MyTheme {
       centerTitle: true,
     ),
 
-
+    bottomNavigationBarTheme:const BottomNavigationBarThemeData(
+      type: BottomNavigationBarType.fixed,
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      selectedItemColor: gold,
+      unselectedItemColor: gray,
+      selectedIconTheme: IconThemeData(size: 30),
+      unselectedIconTheme: IconThemeData(size: 26)
+    )
   );
 
 }
