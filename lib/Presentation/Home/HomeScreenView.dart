@@ -19,12 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
   HomeScreenViewModel viewModel = HomeScreenViewModel();
 
   @override
-  void initState() {
-    super.initState();
-    viewModel.getTopRatedMovies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => viewModel,
