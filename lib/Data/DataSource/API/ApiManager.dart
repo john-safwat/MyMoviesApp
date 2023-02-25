@@ -12,8 +12,8 @@ class ApiManager {
       baseUrl ,
       '/api/v2/list_movies.json',
       {
-        'sort_by' : 'rating' ,
-        'genre' : 'SCI-Fi'
+        'sort_by' : 'year' ,
+        'genre' : 'Animation '
       }
     );
     var response = await http.get(url);

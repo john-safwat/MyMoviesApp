@@ -38,13 +38,14 @@ class _HomeTabViewState extends State<HomeTabView> {
               ),
             );
           } else {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  TopRatedMovies(movies: value.movies!),
-
-                ],
-              )
+            return SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    TopRatedMovies(movies: value.movies!),
+                  ],
+                )
+              ),
             );
           }
         },
