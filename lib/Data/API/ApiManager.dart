@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import '../../Models/MovieResponse/MovieResponse.dart';
-
+import 'package:mymoviesapp/Data/Models/MovieResponse/MovieResponse.dart';
 
 class ApiManager {
   String baseUrl = 'yts.mx';

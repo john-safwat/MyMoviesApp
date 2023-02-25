@@ -1,6 +1,5 @@
 import 'package:mymoviesapp/Data/Models/MovieResponse/Movies.dart';
-import 'package:mymoviesapp/Domain/Repository/HomeDataRepo/Home_Data_Contract.dart';
-import 'Home_Data_Remote_DataSource_Impl.dart';
+import 'package:mymoviesapp/Domain/Repository/Home_Data_Contract.dart';
 
 class HomeDataRepositoryImpl implements HomeDataRepository {
   HomeDataRemoteDataSource remoteDataSource ;

@@ -42,8 +42,8 @@ class TopRatedMovies extends StatelessWidget {
                   cardSpreadInDegrees: 5, // Change the Spread of Background Cards
                   onChange: (index) {
                     debugPrint(movies[index].title);
-                    // the cards
                   },
+                  // the cards
                   widgets: movies.map((e) =>
                       Image.network(
                         e.largeCoverImage!,
