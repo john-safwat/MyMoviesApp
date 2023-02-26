@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:mymoviesapp/Data/Models/MovieResponse/MovieResponse.dart';
+import 'package:mymoviesapp/Data/Models/MovieResponse/MovieResponseDTO.dart';
 
 class ApiManager {
   String baseUrl = 'yts.mx';
 
-  Future<MovieResponse> getHighRatingMovies()async{
+  Future<MovieResponseDTO> getHighRatingMovies()async{
     Uri url = Uri.https(
       baseUrl ,
       '/api/v2/list_movies.json',
@@ -16,7 +16,7 @@ class ApiManager {
       }
     );
     var response = await http.get(url);
-    return MovieResponse.fromJson(jsonDecode(response.body));
+    return MovieResponseDTO.fromJson(jsonDecode(response.body));
   }
 
 }

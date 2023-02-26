@@ -1,5 +1,7 @@
-class Torrents {
-  Torrents({
+import 'package:mymoviesapp/Domain/Models/Torrents.dart';
+
+class TorrentsDTO {
+  TorrentsDTO({
       this.url, 
       this.hash, 
       this.quality, 
@@ -11,7 +13,7 @@ class Torrents {
       this.dateUploaded, 
       this.dateUploadedUnix,});
 
-  Torrents.fromJson(dynamic json) {
+  TorrentsDTO.fromJson(dynamic json) {
     url = json['url'];
     hash = json['hash'];
     quality = json['quality'];
@@ -47,6 +49,21 @@ class Torrents {
     map['date_uploaded'] = dateUploaded;
     map['date_uploaded_unix'] = dateUploadedUnix;
     return map;
+  }
+
+  Torrents toDomain(){
+    return Torrents(
+      url: url,
+      dateUploadedUnix: dateUploadedUnix,
+      dateUploaded: dateUploaded,
+      size: size,
+      hash: hash,
+      peers: peers,
+      quality: quality,
+      seeds: seeds,
+      sizeBytes: sizeBytes,
+      type: type,
+    );
   }
 
 }

@@ -1,7 +1,10 @@
-import 'Torrents.dart';
+import 'package:mymoviesapp/Domain/Models/Movies.dart';
+import 'package:mymoviesapp/Domain/Models/Torrents.dart';
 
-class Movies {
-  Movies({
+import 'TorrentsDTO.dart';
+
+class MoviesDTO {
+  MoviesDTO({
       this.id, 
       this.url, 
       this.imdbCode, 
@@ -29,7 +32,7 @@ class Movies {
       this.dateUploaded, 
       this.dateUploadedUnix,});
 
-  Movies.fromJson(dynamic json) {
+  MoviesDTO.fromJson(dynamic json) {
     id = json['id'];
     url = json['url'];
     imdbCode = json['imdb_code'];
@@ -56,7 +59,7 @@ class Movies {
     if (json['torrents'] != null) {
       torrents = [];
       json['torrents'].forEach((v) {
-        torrents?.add(Torrents.fromJson(v));
+        torrents?.add(TorrentsDTO.fromJson(v));
       });
     }
     dateUploaded = json['date_uploaded'];
@@ -85,7 +88,7 @@ class Movies {
   String? mediumCoverImage;
   String? largeCoverImage;
   String? state;
-  List<Torrents>? torrents;
+  List<TorrentsDTO>? torrents;
   String? dateUploaded;
   num? dateUploadedUnix;
 
@@ -121,5 +124,34 @@ class Movies {
     map['date_uploaded_unix'] = dateUploadedUnix;
     return map;
   }
-
+  Movies toDomain(){
+    return Movies(
+      title: title,
+      backgroundImage: backgroundImage,
+      backgroundImageOriginal: backgroundImageOriginal,
+      dateUploaded: dateUploaded,
+      dateUploadedUnix: dateUploadedUnix,
+      descriptionFull: descriptionFull,
+      genres: genres,
+      id: id,
+      imdbCode: imdbCode,
+      language: language,
+      largeCoverImage: largeCoverImage,
+      mediumCoverImage: mediumCoverImage,
+      mpaRating: mpaRating,
+      rating: rating,
+      runtime: runtime,
+      slug: slug,
+      smallCoverImage: smallCoverImage,
+      state: state,
+      summary: summary,
+      synopsis: synopsis,
+      titleEnglish: titleEnglish,
+      titleLong: titleLong,
+      torrents: torrents?.map((torrent) => torrent.toDomain()).toList(),
+      url: url,
+      year: year,
+      ytTrailerCode: ytTrailerCode,
+    );
+  }
 }

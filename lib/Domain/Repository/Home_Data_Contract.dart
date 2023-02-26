@@ -1,5 +1,5 @@
-import 'package:mymoviesapp/Data/Models/MovieResponse/MovieResponse.dart';
-import 'package:mymoviesapp/Data/Models/MovieResponse/Movies.dart';
+import 'package:mymoviesapp/Domain/Models/MovieResponse.dart';
+import 'package:mymoviesapp/Domain/Models/Movies.dart';
 
 abstract class HomeDataRepository {
   Future<List<Movies>?> getTopRatedMovies();

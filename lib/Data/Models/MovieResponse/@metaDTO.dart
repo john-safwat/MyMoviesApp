@@ -1,11 +1,11 @@
-class meta {
-  meta({
+class metaDTO {
+  metaDTO({
       this.serverTime, 
       this.serverTimezone, 
       this.apiVersion, 
       this.executionTime,});
 
-  meta.fromJson(dynamic json) {
+  metaDTO.fromJson(dynamic json) {
     serverTime = json['server_time'];
     serverTimezone = json['server_timezone'];
     apiVersion = json['api_version'];
