@@ -27,13 +27,14 @@ class ApiManager {
     return MovieResponseDTO.fromJson(jsonDecode(response.body));
   }
 
-  Future<MovieResponseDTO> getMovieListByGenre( String genre)async{
+  Future<MovieResponseDTO> getMovieListByGenre( String genre , String page)async{
     Uri url = Uri.https(
         baseUrl ,
         '/api/v2/list_movies.json',
         {
           'sort_by' : 'year' ,
-          'genre' : genre
+          'genre' : genre,
+          'page' : page,
         }
     );
     var response = await http.get(url);

@@ -6,12 +6,18 @@ class GetMoviesByGenreUseCase{
   GetMoviesByGenreUseCase(this.repository);
 
   Future<List<Movies>?> doWork(String genre)async{
-    var response = await repository.getMoviesByGenre(genre);
-    for (int i =0 ; i< response!.length ; i++){
-      if (response[i].largeCoverImage == null){
-        response.remove(response[i]);
+    List<Movies> movies = [];
+    for (int i = 0 ; i<3 ; i++){
+      var response = await repository.getMoviesByGenre(genre , i.toString());
+      for(int j = 0 ; j<response!.length ;j++){
+        movies.add(response[j]);
       }
     }
-    return response;
+    for (int i =0 ; i< movies.length ; i++){
+      if (movies[i].rating == 0 || movies[i].rating == null){
+        movies.remove(movies[i]);
+      }
+    }
+    return movies;
   }
 }

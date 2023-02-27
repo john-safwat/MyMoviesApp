@@ -37,8 +37,10 @@ class Movieslist extends StatelessWidget {
               height: 220,
               viewportFraction: 0.32,
               initialPage: 5,
+              autoPlayInterval: const Duration(seconds: 1),
               enableInfiniteScroll: true,
               enlargeCenterPage: true,
+              autoPlay: false,
               enlargeFactor: 0.32,
               scrollDirection: Axis.horizontal,
             ),
@@ -64,7 +66,7 @@ class PosterImage extends StatelessWidget {
         ),
       ]),
       placeholder: (context, url) => const Center(
-          child: CircularProgressIndicator(
+        child: CircularProgressIndicator(
         color: MyTheme.gold,
       )),
       errorWidget: (context, url, error) => const SizedBox(
@@ -74,7 +76,8 @@ class PosterImage extends StatelessWidget {
               Icons.error,
               color: Colors.red,
             ),
-          )),
+          )
+      ),
     );
   }
 }

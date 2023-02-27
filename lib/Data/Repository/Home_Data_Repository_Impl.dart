@@ -12,8 +12,8 @@ class HomeDataRepositoryImpl implements HomeDataRepository {
   }
 
   @override
-  Future<List<Movies>?> getMoviesByGenre(String genre) async{
-    var response = await remoteDataSource.getMoviesByGenre(genre);
+  Future<List<Movies>?> getMoviesByGenre(String genre ,  String page) async{
+    var response = await remoteDataSource.getMoviesByGenre(genre ,page);
     return response.data?.movies?.map((e) => e.toDomain()).toList();
   }
 

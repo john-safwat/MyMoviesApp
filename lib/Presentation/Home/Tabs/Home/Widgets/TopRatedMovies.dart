@@ -13,13 +13,13 @@ class TopRatedMovies extends StatelessWidget {
       children: [
         // the highlight in the background
         Image.asset('assets/images/goldenshadow.png',
-          height: 300,
+          height: 350,
           width: double.infinity,
           fit: BoxFit.cover,
         ),
         // this container contain the cards and the title
         Container(
-            height: 300,
+            height: 320,
             margin: const EdgeInsets.all(20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,6 +46,7 @@ class TopRatedMovies extends StatelessWidget {
                   widgets: movies.map((e) =>
                       Image.network(
                         e.largeCoverImage!,
+                        height: 200,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) {
                             return ClipRRect(
