@@ -7,6 +7,11 @@ class GetMoviesByGenreUseCase{
 
   Future<List<Movies>?> doWork(String genre)async{
     var response = await repository.getMoviesByGenre(genre);
+    for (int i =0 ; i< response!.length ; i++){
+      if (response[i].largeCoverImage == null){
+        response.remove(response[i]);
+      }
+    }
     return response;
   }
 }

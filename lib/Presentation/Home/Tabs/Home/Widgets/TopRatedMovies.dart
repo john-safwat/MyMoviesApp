@@ -13,13 +13,13 @@ class TopRatedMovies extends StatelessWidget {
       children: [
         // the highlight in the background
         Image.asset('assets/images/goldenshadow.png',
-          height: 400,
+          height: 300,
           width: double.infinity,
           fit: BoxFit.cover,
         ),
         // this container contain the cards and the title
         Container(
-            height: 335,
+            height: 300,
             margin: const EdgeInsets.all(20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
