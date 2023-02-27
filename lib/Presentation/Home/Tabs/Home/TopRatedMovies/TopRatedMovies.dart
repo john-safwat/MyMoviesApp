@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mymoviesapp/Domain/Models/Movies.dart';
-import 'package:mymoviesapp/Presentation/Theme/Theme.dart';
+import 'package:mymoviesapp/Core/Theme/Theme.dart';
 import 'package:swipe_deck/swipe_deck.dart';
 
 class TopRatedMovies extends StatelessWidget {

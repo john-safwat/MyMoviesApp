@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mymoviesapp/Domain/UseCase/getMoviesDataUseCase.dart';
 import 'package:mymoviesapp/Presentation/Home/Tabs/Home/HomeTabViewModel.dart';
 import 'package:mymoviesapp/Presentation/Home/Tabs/Home/TopRatedMovies/TopRatedMovies.dart';
-import 'package:mymoviesapp/Presentation/Theme/Theme.dart';
+import 'package:mymoviesapp/Core/Theme/Theme.dart';
+import 'package:mymoviesapp/Presentation/Home/di.dart';
 import 'package:provider/provider.dart';
 
 class HomeTabView extends StatefulWidget {
@@ -10,7 +12,7 @@ class HomeTabView extends StatefulWidget {
 }
 
 class _HomeTabViewState extends State<HomeTabView> {
-  HomeTabViewModel viewModel = HomeTabViewModel();
+  HomeTabViewModel viewModel = HomeTabViewModel(GetMoviesDataUseCase(injectHomeDataRepo()));
   @override
   void initState() {
     super.initState();

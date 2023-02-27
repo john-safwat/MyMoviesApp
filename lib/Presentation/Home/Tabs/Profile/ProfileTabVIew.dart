@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mymoviesapp/Presentation/Theme/Theme.dart';
+import 'package:mymoviesapp/Core/Theme/Theme.dart';
 
 class ProfileTabView extends StatelessWidget {
 

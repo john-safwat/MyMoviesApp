@@ -4,25 +4,19 @@ import 'package:mymoviesapp/Data/DataSource/Home_Data_Remote_DataSource_Impl.dar
 import 'package:mymoviesapp/Data/Repository/Home_Data_Repository_Impl.dart';
 import 'package:mymoviesapp/Domain/Models/Movies.dart';
 import 'package:mymoviesapp/Domain/Repository/Home_Data_Contract.dart';
+import 'package:mymoviesapp/Domain/UseCase/getMoviesDataUseCase.dart';
+import 'package:mymoviesapp/Presentation/Home/di.dart';
 class HomeTabViewModel extends ChangeNotifier {
   List<Movies>? movies ;
   String? errorMessage ;
-
-  late ApiManager apiManager;
-  late HomeDataRemoteDataSource remoteDataSource;
-  late HomeDataRepository repository ;
-
-  HomeTabViewModel(){
-    apiManager = ApiManager();
-    remoteDataSource = HomeDataRemoteDataSourceImpl(apiManager);
-    repository = HomeDataRepositoryImpl(remoteDataSource);
-  }
+  GetMoviesDataUseCase useCase ;
+  HomeTabViewModel(this.useCase);
 
   Future<void> getTopRatedMovies() async{
     movies = null ;
     errorMessage = null ;
     try{
-      movies = await repository.getTopRatedMovies();
+      movies = await useCase.doWork();
     }catch(e){
       errorMessage = "Network Error";
     }

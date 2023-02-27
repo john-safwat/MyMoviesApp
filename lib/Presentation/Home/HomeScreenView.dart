@@ -4,7 +4,6 @@ import 'package:mymoviesapp/Presentation/Home/Tabs/Browse/BrowseTabView.dart';
 import 'package:mymoviesapp/Presentation/Home/Tabs/Home/HomeTabView.dart';
 import 'package:mymoviesapp/Presentation/Home/Tabs/Profile/ProfileTabVIew.dart';
 import 'package:mymoviesapp/Presentation/Home/Tabs/Search/SearchTabView.dart';
-import 'package:mymoviesapp/Presentation/Theme/Theme.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
