@@ -20,11 +20,23 @@ class ApiManager {
       '/api/v2/list_movies.json',
       {
         'sort_by' : 'year' ,
-        'genre' : 'Animation '
+        'genre' : 'SCI-FI '
       }
     );
     var response = await http.get(url);
     return MovieResponseDTO.fromJson(jsonDecode(response.body));
   }
 
+  Future<MovieResponseDTO> getMovieListByGenre( String genre)async{
+    Uri url = Uri.https(
+        baseUrl ,
+        '/api/v2/list_movies.json',
+        {
+          'sort_by' : 'year' ,
+          'genre' : genre
+        }
+    );
+    var response = await http.get(url);
+    return MovieResponseDTO.fromJson(jsonDecode(response.body));
+  }
 }

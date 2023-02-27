@@ -13,4 +13,10 @@ class HomeDataRemoteDataSourceImpl implements HomeDataRemoteDataSource{
     return response.toDomain();
   }
 
+  @override
+  Future<MovieResponse> getMoviesByGenre(String genre) async{
+    var response = await apiManager.getMovieListByGenre(genre);
+    return response.toDomain();
+  }
+
 }
