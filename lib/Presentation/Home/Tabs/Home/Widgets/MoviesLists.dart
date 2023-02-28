@@ -1,13 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:mymoviesapp/Core/Theme/Theme.dart';
 import 'package:mymoviesapp/Domain/Models/Movies.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:mymoviesapp/Presentation/Home/Tabs/Home/Widgets/PosterImage.dart';
 
 class Movieslist extends StatelessWidget {
   List<Movies> movies;
   String type;
-
   Movieslist({required this.movies , required this.type });
 
   @override
@@ -51,33 +49,3 @@ class Movieslist extends StatelessWidget {
   }
 }
 
-class PosterImage extends StatelessWidget {
-  Movies movie;
-  PosterImage({required this.movie});
-
-  @override
-  Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      imageUrl: movie.largeCoverImage!,
-      imageBuilder: (context, imageProvider) => Stack(children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image.network(movie.largeCoverImage!),
-        ),
-      ]),
-      placeholder: (context, url) => const Center(
-        child: CircularProgressIndicator(
-        color: MyTheme.gold,
-      )),
-      errorWidget: (context, url, error) => const SizedBox(
-          width: 120,
-          child: Center(
-            child: Icon(
-              Icons.error,
-              color: Colors.red,
-            ),
-          )
-      ),
-    );
-  }
-}

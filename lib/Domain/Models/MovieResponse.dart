@@ -10,6 +10,4 @@ class MovieResponse {
   String? status;
   String? statusMessage;
   DataDTO? data;
-
-
 }

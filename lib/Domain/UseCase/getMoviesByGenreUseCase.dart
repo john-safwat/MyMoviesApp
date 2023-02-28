@@ -7,12 +7,14 @@ class GetMoviesByGenreUseCase{
 
   Future<List<Movies>?> doWork(String genre)async{
     List<Movies> movies = [];
+    // make the api call for three pages
     for (int i = 0 ; i<3 ; i++){
       var response = await repository.getMoviesByGenre(genre , i.toString());
       for(int j = 0 ; j<response!.length ;j++){
         movies.add(response[j]);
       }
     }
+    // filter the movies to remove the trash objects
     for (int i =0 ; i< movies.length ; i++){
       if (movies[i].rating == 0 || movies[i].rating == null){
         movies.remove(movies[i]);

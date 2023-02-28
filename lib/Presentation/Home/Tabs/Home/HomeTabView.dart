@@ -4,6 +4,7 @@ import 'package:mymoviesapp/Domain/UseCase/getMoviesDataUseCase.dart';
 import 'package:mymoviesapp/Presentation/Home/Tabs/Home/HomeTabViewModel.dart';
 import 'package:mymoviesapp/Core/Theme/Theme.dart';
 import 'package:mymoviesapp/Presentation/Home/Tabs/Home/Widgets/MoviesLists.dart';
+import 'package:mymoviesapp/Presentation/Home/Tabs/Home/Widgets/MyPlaceHolder.dart';
 import 'package:mymoviesapp/Presentation/Home/Tabs/Home/Widgets/TopRatedMovies.dart';
 import 'package:mymoviesapp/Presentation/Home/di.dart';
 import 'package:provider/provider.dart';
@@ -46,25 +47,19 @@ class _HomeTabViewState extends State<HomeTabView> {
               || value.crimeMovies == null
               || value.dramaMovies == null
           ) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: MyTheme.gold,
-              ),
-            );
+            return MyPlaceHolder();
           } else {
-            return SafeArea(
-              child: SingleChildScrollView(
+            return SingleChildScrollView(
                 child: Column(
                   children: [
                     TopRatedMovies(movies: value.movies!),
-                    const SizedBox(height: 20,),
+                    const SizedBox(height: 10,),
                     Movieslist(movies: value.actionMovies! , type: "Action Movies",),
                     Movieslist(movies: value.crimeMovies! , type: "Crime Movies  ",),
                     Movieslist(movies: value.dramaMovies! , type: "Drama Movies",),
                     Movieslist(movies: value.animationMovies! , type: "Animation Movies",),
                   ],
                 )
-              ),
             );
           }
         },

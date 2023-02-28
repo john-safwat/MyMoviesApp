@@ -19,6 +19,7 @@ class HomeTabViewModel extends ChangeNotifier {
     await getActionMovies();
     await getCrimeMovies();
     await getAnimationMovies();
+    notifyListeners();
   }
 
   // get top rated movies
@@ -30,7 +31,6 @@ class HomeTabViewModel extends ChangeNotifier {
     }catch(e){
       errorMessage = "Network Error";
     }
-    notifyListeners();
   }
 
   // get drama movies
@@ -42,7 +42,6 @@ class HomeTabViewModel extends ChangeNotifier {
     }catch (e){
       errorMessage = "DataError";
     }
-    notifyListeners();
   }
 
   // get action movies
@@ -54,7 +53,6 @@ class HomeTabViewModel extends ChangeNotifier {
     }catch (e){
       errorMessage = "DataError";
     }
-    notifyListeners();
   }
 
   // get romantic movies
@@ -66,7 +64,6 @@ class HomeTabViewModel extends ChangeNotifier {
     }catch (e){
       errorMessage = "DataError";
     }
-    notifyListeners();
   }
 
   // get animation movies
@@ -78,7 +75,6 @@ class HomeTabViewModel extends ChangeNotifier {
     }catch (e){
       errorMessage = "DataError";
     }
-    notifyListeners();
   }
 
 }
