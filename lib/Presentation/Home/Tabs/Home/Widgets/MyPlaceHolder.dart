@@ -10,40 +10,37 @@ class MyPlaceHolder extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-          children: [
-            Stack(
-              children: [
-                PlaceHolderContainer(
-                    height: MediaQuery.of(context).size.height *0.9,
-                    width: MediaQuery.of(context).size.width
-                ),
-                Positioned.fill(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CarouselSlider(
-                        items: placeholders.map((movie) => PlaceHolderContainer(
-                            height: MediaQuery.of(context).size.height *0.3,
-                            width:MediaQuery.of(context).size.width)
-                        ).toList(),
-                        options: CarouselOptions(
-                          height:300,
-                          viewportFraction: 0.5,
-                          initialPage: 0,
-                          autoPlayInterval: const Duration(seconds: 1),
-                          enableInfiniteScroll: true,
-                          enlargeCenterPage: true,
-                          autoPlay: false,
-                          enlargeFactor: 0.32,
-                          scrollDirection: Axis.horizontal,
-                        ),
+        children: [
+          Stack(
+            children: [
+              PlaceHolderContainer(
+                  height: MediaQuery.of(context).size.height *0.9,
+                  width: MediaQuery.of(context).size.width
+              ),
+              Positioned.fill(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CarouselSlider(
+                      items: placeholders.map((movie) => Image.asset('assets/images/loading.jpg')).toList(),
+                      options: CarouselOptions(
+                        height:300,
+                        viewportFraction: 0.5,
+                        initialPage: 0,
+                        autoPlayInterval: const Duration(seconds: 1),
+                        enableInfiniteScroll: true,
+                        enlargeCenterPage: true,
+                        autoPlay: false,
+                        enlargeFactor: 0.32,
+                        scrollDirection: Axis.horizontal,
                       ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ],
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }

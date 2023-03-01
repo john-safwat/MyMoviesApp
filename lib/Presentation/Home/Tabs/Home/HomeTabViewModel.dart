@@ -40,7 +40,7 @@ class HomeTabViewModel extends ChangeNotifier {
     try {
       dramaMovies = await getMoviesByGenreUseCase.doWork("Drama");
     }catch (e){
-      errorMessage = "DataError";
+      errorMessage = e.toString();
     }
   }
 
@@ -51,7 +51,7 @@ class HomeTabViewModel extends ChangeNotifier {
     try {
       actionMovies = await getMoviesByGenreUseCase.doWork("Action");
     }catch (e){
-      errorMessage = "DataError";
+      errorMessage = e.toString();
     }
   }
 
@@ -62,7 +62,7 @@ class HomeTabViewModel extends ChangeNotifier {
     try {
       crimeMovies = await getMoviesByGenreUseCase.doWork("Crime");
     }catch (e){
-      errorMessage = "DataError";
+      errorMessage = e.toString();
     }
   }
 
@@ -73,7 +73,7 @@ class HomeTabViewModel extends ChangeNotifier {
     try {
       animationMovies = await getMoviesByGenreUseCase.doWork("animation");
     }catch (e){
-      errorMessage = "DataError";
+      errorMessage = e.toString();
     }
   }
 

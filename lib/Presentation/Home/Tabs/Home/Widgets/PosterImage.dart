@@ -19,10 +19,7 @@ class PosterImage extends StatelessWidget {
           child: Image.network(movie.largeCoverImage!),
         ),
       ]),
-      placeholder: (context, url) => const Center(
-          child: CircularProgressIndicator(
-            color: MyTheme.gold,
-          )),
+      placeholder: (context, url) => Image.asset('assets/images/loading.jpg'),
       errorWidget: (context, url, error) => Container(
           decoration: BoxDecoration(
             color: MyTheme.gold,
