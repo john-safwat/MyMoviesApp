@@ -32,9 +32,13 @@ class _TopRatedMoviesState extends State<TopRatedMovies> {
             blurColor: MyTheme.backGroundColor
           ),
           width: MediaQuery.of(context).size.width,
-          placeholder: (context, url) => Image.asset(
-            'assets/images/loading.jpg',
+          placeholder: (context, url) => Container(
+            height: MediaQuery.of(context).size.height *0.5,
             width: MediaQuery.of(context).size.width,
+            child: Image.asset(
+              'assets/images/loading.jpg',
+
+            ),
           ),
           errorWidget: (context, url, error) => Container(
               decoration: BoxDecoration(
