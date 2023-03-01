@@ -1,3 +1,4 @@
+import 'package:blur/blur.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +27,15 @@ class _TopRatedMoviesState extends State<TopRatedMovies> {
         // image to show in the background it the same image of the poster
         CachedNetworkImage(
           imageUrl: image,
+          imageBuilder: (context, imageProvider) => Image.network(image).blurred(
+            blur: 2.5,
+            blurColor: MyTheme.backGroundColor
+          ),
           width: MediaQuery.of(context).size.width,
-          placeholder: (context, url) => const Center(child: CircularProgressIndicator(color: MyTheme.gold,)),
+          placeholder: (context, url) => Image.asset(
+            'assets/images/loading.jpg',
+            width: MediaQuery.of(context).size.width,
+          ),
           errorWidget: (context, url, error) => Container(
               decoration: BoxDecoration(
                 color: MyTheme.gold,
