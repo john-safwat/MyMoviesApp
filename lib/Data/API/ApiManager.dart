@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:mymoviesapp/Data/Models/MovieResponse/MovieResponseDTO.dart';
 
@@ -14,6 +15,8 @@ class ApiManager {
 
   String baseUrl = 'yts.mx';
 
+  var dio = Dio();
+
   Future<MovieResponseDTO> getHighRatingMovies()async{
     Uri url = Uri.https(
       baseUrl ,
@@ -23,8 +26,10 @@ class ApiManager {
         'genre' : 'SCI-FI '
       }
     );
-    var response = await http.get(url);
-    return MovieResponseDTO.fromJson(jsonDecode(response.body));
+    //var response = await http.get(url);
+
+    var response =await dio.get(url.toString());
+    return MovieResponseDTO.fromJson(response.data);
   }
 
   Future<MovieResponseDTO> getMovieListByGenre( String genre , String page)async{
@@ -37,7 +42,8 @@ class ApiManager {
           'page' : page,
         }
     );
-    var response = await http.get(url);
-    return MovieResponseDTO.fromJson(jsonDecode(response.body));
+    //var response = await http.get(url);
+    var response =await dio.get(url.toString());
+    return MovieResponseDTO.fromJson(response.data);
   }
 }

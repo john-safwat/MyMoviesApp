@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mymoviesapp/Core/Theme/Theme.dart';
 import 'package:mymoviesapp/Presentation/Home/HomeScreenView.dart';
+import 'package:dcdg/dcdg.dart';
 
 void main(){
   runApp(MyApp());
