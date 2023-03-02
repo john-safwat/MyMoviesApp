@@ -3,7 +3,6 @@ import 'package:mymoviesapp/Presentation/Home/Tabs/Browse/BrowseTabView.dart';
 import 'package:mymoviesapp/Presentation/Home/Tabs/Home/HomeTabView.dart';
 import 'package:mymoviesapp/Presentation/Home/Tabs/Profile/ProfileTabVIew.dart';
 import 'package:mymoviesapp/Presentation/Home/Tabs/Search/SearchTabView.dart';
-
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'Home Screen';
   @override
@@ -12,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
-  List<Widget> tabs = [HomeTabView() , SearchTabView(), BrowseTabView() , ProfileTabView() ];
+  List<Widget> tabs =  [HomeTabView() , SearchTabView(), BrowseTabView() , ProfileTabView() ];
 
   @override
   Widget build(BuildContext context) {

@@ -43,6 +43,7 @@ dependencies:
   api_cache_manager: ^1.0.2
   dio: ^5.0.1
   dcdg: ^4.1.0
+  scroll_app_bar: ^2.0.0
 
 dev_dependencies:
   flutter_test:
