@@ -13,9 +13,13 @@ class SearchTabViewModel extends ChangeNotifier {
     movies = null ;
     errorMessage = null ;
     try{
-      debugPrint(keyword);
-      var response = await useCase.getSearchResults(keyword);
-      movies = response;
+      if (keyword == 'الراجل اللي يا بختة'){
+        var response = await useCase.getSearchResults('iron man');
+        movies = response;
+      }else {
+        var response = await useCase.getSearchResults(keyword);
+        movies = response;
+      }
       notifyListeners();
 
     }catch(e){

@@ -31,6 +31,14 @@ class "mymoviesapp::Data::API::ApiManager.dart::ApiManager" {
 "mymoviesapp::Data::API::ApiManager.dart::ApiManager" o-- "mymoviesapp::Data::API::ApiManager.dart::ApiManager"
 "mymoviesapp::Data::API::ApiManager.dart::ApiManager" o-- "dio::src::dio.dart::Dio"
 
+class "mymoviesapp::Data::DataSource::Browse_Data_Remote_DataSource_Impl.dart::BrowseDataRemoteDataSourceImpl" {
+  +ApiManager apiManager
+  +Future<MovieResponse> getBrowseData()
+}
+
+"mymoviesapp::Data::DataSource::Browse_Data_Remote_DataSource_Impl.dart::BrowseDataRemoteDataSourceImpl" o-- "mymoviesapp::Data::API::ApiManager.dart::ApiManager"
+"mymoviesapp::Domain::Repository::Browse_Data_Contract.dart::BrowseDataRemoteDataSource" <|-- "mymoviesapp::Data::DataSource::Browse_Data_Remote_DataSource_Impl.dart::BrowseDataRemoteDataSourceImpl"
+
 class "mymoviesapp::Data::DataSource::Home_Data_Remote_DataSource_Impl.dart::HomeDataRemoteDataSourceImpl" {
   +ApiManager apiManager
   +Future<MovieResponse> getTopRatedMovies()
@@ -122,6 +130,14 @@ class "mymoviesapp::Data::Models::MovieResponse::TorrentsDTO.dart::TorrentsDTO" 
   +Torrents toDomain()
 }
 
+class "mymoviesapp::Data::Repository::Browse_Data_Repository_Impl.dart::BrowseDataRepositoryImpl" {
+  +BrowseDataRemoteDataSource remoteDataSource
+  +Future<List<Movies>> getBrowseData()
+}
+
+"mymoviesapp::Data::Repository::Browse_Data_Repository_Impl.dart::BrowseDataRepositoryImpl" o-- "mymoviesapp::Domain::Repository::Browse_Data_Contract.dart::BrowseDataRemoteDataSource"
+"mymoviesapp::Domain::Repository::Browse_Data_Contract.dart::BrowseDataRepository" <|-- "mymoviesapp::Data::Repository::Browse_Data_Repository_Impl.dart::BrowseDataRepositoryImpl"
+
 class "mymoviesapp::Data::Repository::Home_Data_Repository_Impl.dart::HomeDataRepositoryImpl" {
   +HomeDataRemoteDataSource remoteDataSource
   +Future<List<Movies>?> getTopRatedMovies()
@@ -189,6 +205,14 @@ class "mymoviesapp::Domain::Models::Torrents.dart::Torrents" {
   +num? dateUploadedUnix
 }
 
+abstract class "mymoviesapp::Domain::Repository::Browse_Data_Contract.dart::BrowseDataRepository" {
+  +Future<List<Movies>> getBrowseData()
+}
+
+abstract class "mymoviesapp::Domain::Repository::Browse_Data_Contract.dart::BrowseDataRemoteDataSource" {
+  +Future<MovieResponse> getBrowseData()
+}
+
 abstract class "mymoviesapp::Domain::Repository::Home_Data_Contract.dart::HomeDataRepository" {
   +Future<List<Movies>?> getTopRatedMovies()
   +Future<List<Movies>?> getMoviesByGenre()
@@ -206,6 +230,13 @@ abstract class "mymoviesapp::Domain::Repository::Search_Data_Contract.dart::Sear
 abstract class "mymoviesapp::Domain::Repository::Search_Data_Contract.dart::SearchDataRemoteDataSource" {
   +Future<MovieResponse> getMoviesByKeyWord()
 }
+
+class "mymoviesapp::Domain::UseCase::getMoviesByGenreToBrowseUseCase.dart::GetMoviesByGenreToBrowseUseCase" {
+  +BrowseDataRepository repository
+  +Future<List<Movies>> getMoviesToBrowse()
+}
+
+"mymoviesapp::Domain::UseCase::getMoviesByGenreToBrowseUseCase.dart::GetMoviesByGenreToBrowseUseCase" o-- "mymoviesapp::Domain::Repository::Browse_Data_Contract.dart::BrowseDataRepository"
 
 class "mymoviesapp::Domain::UseCase::getMoviesByGenreUseCase.dart::GetMoviesByGenreUseCase" {
   +HomeDataRepository repository
@@ -250,10 +281,47 @@ class "mymoviesapp::Presentation::Home::HomeScreenView.dart::_HomeScreenState" {
 "flutter::src::widgets::framework.dart::State" <|-- "mymoviesapp::Presentation::Home::HomeScreenView.dart::_HomeScreenState"
 
 class "mymoviesapp::Presentation::Home::Tabs::Browse::BrowseTabView.dart::BrowseTabView" {
+  +State<BrowseTabView> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mymoviesapp::Presentation::Home::Tabs::Browse::BrowseTabView.dart::BrowseTabView"
+
+class "mymoviesapp::Presentation::Home::Tabs::Browse::BrowseTabView.dart::_BrowseTabViewState" {
+  +List<String> genres
+  +int selectedIndex
+  +BrowseTabViewModel viewModel
+  +void initState()
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mymoviesapp::Presentation::Home::Tabs::Browse::BrowseTabView.dart::BrowseTabView"
+"mymoviesapp::Presentation::Home::Tabs::Browse::BrowseTabView.dart::_BrowseTabViewState" o-- "mymoviesapp::Presentation::Home::Tabs::Browse::BrowseTabViewMode.dart::BrowseTabViewModel"
+"flutter::src::widgets::framework.dart::State" <|-- "mymoviesapp::Presentation::Home::Tabs::Browse::BrowseTabView.dart::_BrowseTabViewState"
+
+class "mymoviesapp::Presentation::Home::Tabs::Browse::BrowseTabViewMode.dart::BrowseTabViewModel" {
+  +GetMoviesByGenreToBrowseUseCase useCase
+  +String? errorMessage
+  +List<Movies>? movies
+  +Future<void> getMoviesByGenre()
+}
+
+"mymoviesapp::Presentation::Home::Tabs::Browse::BrowseTabViewMode.dart::BrowseTabViewModel" o-- "mymoviesapp::Domain::UseCase::getMoviesByGenreToBrowseUseCase.dart::GetMoviesByGenreToBrowseUseCase"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "mymoviesapp::Presentation::Home::Tabs::Browse::BrowseTabViewMode.dart::BrowseTabViewModel"
+
+class "mymoviesapp::Presentation::Home::Tabs::Browse::MovieWidget.dart::MovieWidget" {
+  +Movies movie
+  +Widget build()
+}
+
+"mymoviesapp::Presentation::Home::Tabs::Browse::MovieWidget.dart::MovieWidget" o-- "mymoviesapp::Domain::Models::Movies.dart::Movies"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mymoviesapp::Presentation::Home::Tabs::Browse::MovieWidget.dart::MovieWidget"
+
+class "mymoviesapp::Presentation::Home::Tabs::Browse::TabButton.dart::TabButton" {
+  +String genre
+  +bool isSelected
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mymoviesapp::Presentation::Home::Tabs::Browse::TabButton.dart::TabButton"
 
 class "mymoviesapp::Presentation::Home::Tabs::Home::HomeTabView.dart::HomeTabView" {
   +State<HomeTabView> createState()
@@ -343,6 +411,14 @@ class "mymoviesapp::Presentation::Home::Tabs::Profile::ProfileTabVIew.dart::Prof
 }
 
 "flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mymoviesapp::Presentation::Home::Tabs::Profile::ProfileTabVIew.dart::ProfileTabView"
+
+class "mymoviesapp::Presentation::Home::Tabs::Search::MovieWidget.dart::MovieWidget" {
+  +Movies movie
+  +Widget build()
+}
+
+"mymoviesapp::Presentation::Home::Tabs::Search::MovieWidget.dart::MovieWidget" o-- "mymoviesapp::Domain::Models::Movies.dart::Movies"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mymoviesapp::Presentation::Home::Tabs::Search::MovieWidget.dart::MovieWidget"
 
 class "mymoviesapp::Presentation::Home::Tabs::Search::SearchTabView.dart::SearchTabView" {
   +State<SearchTabView> createState()

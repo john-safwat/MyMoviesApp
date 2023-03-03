@@ -35,7 +35,7 @@ class ApiManager {
         baseUrl ,
         '/api/v2/list_movies.json',
         {
-          'sort_by' : 'year' ,
+          'sort_by' : 'rating-year' ,
           'genre' : genre,
           'page' : page,
         }
@@ -50,6 +50,7 @@ class ApiManager {
         '/api/v2/list_movies.json',
         {
           'query_term' : keyword,
+          'sort_by' : "rating"
         }
     );
     var response =await dio.get(url.toString());

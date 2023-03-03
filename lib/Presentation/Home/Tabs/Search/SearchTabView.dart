@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mymoviesapp/Core/Theme/Theme.dart';
 import 'package:mymoviesapp/Domain/UseCase/getSearchResultsUseCase.dart';
+import 'package:mymoviesapp/Presentation/Home/Tabs/Search/MovieWidget.dart';
 import 'package:mymoviesapp/Presentation/Home/Tabs/Search/SearchTabViewModel.dart';
 import 'package:mymoviesapp/Presentation/Home/di.dart';
 import 'package:provider/provider.dart';
@@ -81,58 +82,27 @@ class _SearchTabViewState extends State<SearchTabView> {
                         style: const TextStyle(color: Colors.white),
                       ),
                       ElevatedButton(
-                          onPressed: () {}, child: const Text("Try Again"))
+                        onPressed: () {
+                          setState(() {
+                          });
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(MyTheme.gold),
+                        ) ,
+                        child: const Text("Try Again"),
+                      )
                     ],
                   );
                 }
                 if (value.movies == null) {
-                  return Center(
-                    child: Image.asset('assets/images/Empty.png'),
-                  );
+                  return Center(child: Image.asset('assets/images/Empty.png'),);
                 } else {
                   return Column(
                     children: [
                       Expanded(
                         child: ListView.builder(
                           controller: controller,
-                          itemBuilder: (context, index) => Container(
-                            margin: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: MyTheme.blackThree,
-                              borderRadius: BorderRadius.circular(20)
-                            ),
-                            child: Row(
-                              children: [
-                                CachedNetworkImage(
-                                  imageUrl: value.movies![index].largeCoverImage!,
-                                  imageBuilder: (context, imageProvider) => ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: Image.network(
-                                      value.movies![index].largeCoverImage!,
-                                      height: 200,
-                                    ),
-                                  ),
-                                  placeholder: (context, url) =>  ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: Image.asset(
-                                      'assets/images/loading.jpg',
-                                      height: 200,
-                                    ),
-                                  )
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    height: 200,
-                                    color: Colors.red,
-                                    child: Column(
-                                      children: [
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
+                          itemBuilder: (context, index) => MovieWidget(value.movies![index]),
                           itemCount: value.movies!.length,
                         ),
                       ),
