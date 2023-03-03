@@ -13,13 +13,13 @@ class HomeTabViewModel extends ChangeNotifier {
   GetMoviesByGenreUseCase getMoviesByGenreUseCase ;
   HomeTabViewModel(this.getMoviesDataUseCase , this.getMoviesByGenreUseCase);
 
-  void readData() async {
+  Future<void> readData() async {
     await getTopRatedMovies();
     await getDramaMovies();
     await getActionMovies();
     await getCrimeMovies();
     await getAnimationMovies();
-    notifyListeners();
+    //notifyListeners();
   }
 
   // get top rated movies
@@ -31,6 +31,7 @@ class HomeTabViewModel extends ChangeNotifier {
     }catch(e){
       errorMessage = "Network Error";
     }
+    notifyListeners();
   }
 
   // get drama movies
@@ -42,6 +43,8 @@ class HomeTabViewModel extends ChangeNotifier {
     }catch (e){
       errorMessage = e.toString();
     }
+    notifyListeners();
+
   }
 
   // get action movies
@@ -53,6 +56,8 @@ class HomeTabViewModel extends ChangeNotifier {
     }catch (e){
       errorMessage = e.toString();
     }
+    notifyListeners();
+
   }
 
   // get romantic movies
@@ -64,6 +69,8 @@ class HomeTabViewModel extends ChangeNotifier {
     }catch (e){
       errorMessage = e.toString();
     }
+    notifyListeners();
+
   }
 
   // get animation movies
@@ -75,6 +82,7 @@ class HomeTabViewModel extends ChangeNotifier {
     }catch (e){
       errorMessage = e.toString();
     }
+    notifyListeners();
   }
 
 }

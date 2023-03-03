@@ -15,14 +15,18 @@ class HomeTabView extends StatefulWidget {
 }
 
 class _HomeTabViewState extends State<HomeTabView> {
-  HomeTabViewModel viewModel = HomeTabViewModel(
+  HomeTabViewModel? viewModel = HomeTabViewModel(
     GetMoviesDataUseCase(injectHomeDataRepo()),
     GetMoviesByGenreUseCase(injectHomeDataRepo())
   );
   @override
   void initState() {
     super.initState();
-    viewModel.readData();
+    viewModel!.readData();
+  }
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

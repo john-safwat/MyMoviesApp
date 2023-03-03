@@ -26,8 +26,6 @@ class ApiManager {
         'genre' : 'SCI-FI '
       }
     );
-    //var response = await http.get(url);
-
     var response =await dio.get(url.toString());
     return MovieResponseDTO.fromJson(response.data);
   }
@@ -42,7 +40,18 @@ class ApiManager {
           'page' : page,
         }
     );
-    //var response = await http.get(url);
+    var response =await dio.get(url.toString());
+    return MovieResponseDTO.fromJson(response.data);
+  }
+
+  Future<MovieResponseDTO> gatSearchResults(String keyword)async{
+    Uri url = Uri.https(
+        baseUrl ,
+        '/api/v2/list_movies.json',
+        {
+          'query_term' : keyword,
+        }
+    );
     var response =await dio.get(url.toString());
     return MovieResponseDTO.fromJson(response.data);
   }
