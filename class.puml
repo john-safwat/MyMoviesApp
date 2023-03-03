@@ -1,0 +1,374 @@
+@startuml
+set namespaceSeparator ::
+
+class "mymoviesapp::Core::Theme::Theme.dart::MyTheme" {
+  {static} +Color backGroundColor
+  {static} +Color blackOne
+  {static} +Color blackTwo
+  {static} +Color blackThree
+  {static} +Color blackFour
+  {static} +Color gray
+  {static} +Color gold
+  {static} +Color white
+  {static} +Color green
+  {static} +Color red
+  {static} +ThemeData theme
+}
+
+"mymoviesapp::Core::Theme::Theme.dart::MyTheme" o-- "dart::ui::Color"
+"mymoviesapp::Core::Theme::Theme.dart::MyTheme" o-- "flutter::src::material::theme_data.dart::ThemeData"
+
+class "mymoviesapp::Data::API::ApiManager.dart::ApiManager" {
+  {static} -ApiManager? _instance
+  +String baseUrl
+  +Dio dio
+  {static} +ApiManager getApiManager()
+  +Future<MovieResponseDTO> getHighRatingMovies()
+  +Future<MovieResponseDTO> getMovieListByGenre()
+  +Future<MovieResponseDTO> gatSearchResults()
+}
+
+"mymoviesapp::Data::API::ApiManager.dart::ApiManager" o-- "mymoviesapp::Data::API::ApiManager.dart::ApiManager"
+"mymoviesapp::Data::API::ApiManager.dart::ApiManager" o-- "dio::src::dio.dart::Dio"
+
+class "mymoviesapp::Data::DataSource::Home_Data_Remote_DataSource_Impl.dart::HomeDataRemoteDataSourceImpl" {
+  +ApiManager apiManager
+  +Future<MovieResponse> getTopRatedMovies()
+  +Future<MovieResponse> getMoviesByGenre()
+}
+
+"mymoviesapp::Data::DataSource::Home_Data_Remote_DataSource_Impl.dart::HomeDataRemoteDataSourceImpl" o-- "mymoviesapp::Data::API::ApiManager.dart::ApiManager"
+"mymoviesapp::Domain::Repository::Home_Data_Contract.dart::HomeDataRemoteDataSource" <|-- "mymoviesapp::Data::DataSource::Home_Data_Remote_DataSource_Impl.dart::HomeDataRemoteDataSourceImpl"
+
+class "mymoviesapp::Data::DataSource::Search_Data_Remote_DataSource_Impl.dart::SearchDataRemoteDataSourceImpl" {
+  +ApiManager apiManager
+  +Future<MovieResponse> getMoviesByKeyWord()
+}
+
+"mymoviesapp::Data::DataSource::Search_Data_Remote_DataSource_Impl.dart::SearchDataRemoteDataSourceImpl" o-- "mymoviesapp::Data::API::ApiManager.dart::ApiManager"
+"mymoviesapp::Domain::Repository::Search_Data_Contract.dart::SearchDataRemoteDataSource" <|-- "mymoviesapp::Data::DataSource::Search_Data_Remote_DataSource_Impl.dart::SearchDataRemoteDataSourceImpl"
+
+class "mymoviesapp::Data::Models::MovieResponse::@metaDTO.dart::metaDTO" {
+  +num? serverTime
+  +String? serverTimezone
+  +num? apiVersion
+  +String? executionTime
+  +Map<String, dynamic> toJson()
+}
+
+class "mymoviesapp::Data::Models::MovieResponse::DataDTO.dart::DataDTO" {
+  +num? movieCount
+  +num? limit
+  +num? pageNumber
+  +List<MoviesDTO>? movies
+  +Map<String, dynamic> toJson()
+}
+
+class "mymoviesapp::Data::Models::MovieResponse::MovieResponseDTO.dart::MovieResponseDTO" {
+  +String? status
+  +String? statusMessage
+  +DataDTO? data
+  +metaDTO? metaa
+  +Map<String, dynamic> toJson()
+  +MovieResponse toDomain()
+}
+
+"mymoviesapp::Data::Models::MovieResponse::MovieResponseDTO.dart::MovieResponseDTO" o-- "mymoviesapp::Data::Models::MovieResponse::DataDTO.dart::DataDTO"
+"mymoviesapp::Data::Models::MovieResponse::MovieResponseDTO.dart::MovieResponseDTO" o-- "mymoviesapp::Data::Models::MovieResponse::@metaDTO.dart::metaDTO"
+
+class "mymoviesapp::Data::Models::MovieResponse::MoviesDTO.dart::MoviesDTO" {
+  +num? id
+  +String? url
+  +String? imdbCode
+  +String? title
+  +String? titleEnglish
+  +String? titleLong
+  +String? slug
+  +num? year
+  +num? rating
+  +num? runtime
+  +List<String>? genres
+  +String? summary
+  +String? descriptionFull
+  +String? synopsis
+  +String? ytTrailerCode
+  +String? language
+  +String? mpaRating
+  +String? backgroundImage
+  +String? backgroundImageOriginal
+  +String? smallCoverImage
+  +String? mediumCoverImage
+  +String? largeCoverImage
+  +String? state
+  +List<TorrentsDTO>? torrents
+  +String? dateUploaded
+  +num? dateUploadedUnix
+  +Map<String, dynamic> toJson()
+  +Movies toDomain()
+}
+
+class "mymoviesapp::Data::Models::MovieResponse::TorrentsDTO.dart::TorrentsDTO" {
+  +String? url
+  +String? hash
+  +String? quality
+  +String? type
+  +num? seeds
+  +num? peers
+  +String? size
+  +num? sizeBytes
+  +String? dateUploaded
+  +num? dateUploadedUnix
+  +Map<String, dynamic> toJson()
+  +Torrents toDomain()
+}
+
+class "mymoviesapp::Data::Repository::Home_Data_Repository_Impl.dart::HomeDataRepositoryImpl" {
+  +HomeDataRemoteDataSource remoteDataSource
+  +Future<List<Movies>?> getTopRatedMovies()
+  +Future<List<Movies>?> getMoviesByGenre()
+}
+
+"mymoviesapp::Data::Repository::Home_Data_Repository_Impl.dart::HomeDataRepositoryImpl" o-- "mymoviesapp::Domain::Repository::Home_Data_Contract.dart::HomeDataRemoteDataSource"
+"mymoviesapp::Domain::Repository::Home_Data_Contract.dart::HomeDataRepository" <|-- "mymoviesapp::Data::Repository::Home_Data_Repository_Impl.dart::HomeDataRepositoryImpl"
+
+class "mymoviesapp::Data::Repository::Search_Data_Repository_Impl.dart::SearchDataRepositoryImpl" {
+  +SearchDataRemoteDataSource remoteDataSource
+  +Future<List<Movies>?> getMoviesByKeyWord()
+}
+
+"mymoviesapp::Data::Repository::Search_Data_Repository_Impl.dart::SearchDataRepositoryImpl" o-- "mymoviesapp::Domain::Repository::Search_Data_Contract.dart::SearchDataRemoteDataSource"
+"mymoviesapp::Domain::Repository::Search_Data_Contract.dart::SearchDataRepository" <|-- "mymoviesapp::Data::Repository::Search_Data_Repository_Impl.dart::SearchDataRepositoryImpl"
+
+class "mymoviesapp::Domain::Models::MovieResponse.dart::MovieResponse" {
+  +String? status
+  +String? statusMessage
+  +DataDTO? data
+}
+
+"mymoviesapp::Domain::Models::MovieResponse.dart::MovieResponse" o-- "mymoviesapp::Data::Models::MovieResponse::DataDTO.dart::DataDTO"
+
+class "mymoviesapp::Domain::Models::Movies.dart::Movies" {
+  +num? id
+  +String? url
+  +String? imdbCode
+  +String? title
+  +String? titleEnglish
+  +String? titleLong
+  +String? slug
+  +num? year
+  +num? rating
+  +num? runtime
+  +List<String>? genres
+  +String? summary
+  +String? descriptionFull
+  +String? synopsis
+  +String? ytTrailerCode
+  +String? language
+  +String? mpaRating
+  +String? backgroundImage
+  +String? backgroundImageOriginal
+  +String? smallCoverImage
+  +String? mediumCoverImage
+  +String? largeCoverImage
+  +String? state
+  +List<Torrents>? torrents
+  +String? dateUploaded
+  +num? dateUploadedUnix
+}
+
+class "mymoviesapp::Domain::Models::Torrents.dart::Torrents" {
+  +String? url
+  +String? hash
+  +String? quality
+  +String? type
+  +num? seeds
+  +num? peers
+  +String? size
+  +num? sizeBytes
+  +String? dateUploaded
+  +num? dateUploadedUnix
+}
+
+abstract class "mymoviesapp::Domain::Repository::Home_Data_Contract.dart::HomeDataRepository" {
+  +Future<List<Movies>?> getTopRatedMovies()
+  +Future<List<Movies>?> getMoviesByGenre()
+}
+
+abstract class "mymoviesapp::Domain::Repository::Home_Data_Contract.dart::HomeDataRemoteDataSource" {
+  +Future<MovieResponse> getTopRatedMovies()
+  +Future<MovieResponse> getMoviesByGenre()
+}
+
+abstract class "mymoviesapp::Domain::Repository::Search_Data_Contract.dart::SearchDataRepository" {
+  +Future<List<Movies>?> getMoviesByKeyWord()
+}
+
+abstract class "mymoviesapp::Domain::Repository::Search_Data_Contract.dart::SearchDataRemoteDataSource" {
+  +Future<MovieResponse> getMoviesByKeyWord()
+}
+
+class "mymoviesapp::Domain::UseCase::getMoviesByGenreUseCase.dart::GetMoviesByGenreUseCase" {
+  +HomeDataRepository repository
+  +Future<List<Movies>?> doWork()
+}
+
+"mymoviesapp::Domain::UseCase::getMoviesByGenreUseCase.dart::GetMoviesByGenreUseCase" o-- "mymoviesapp::Domain::Repository::Home_Data_Contract.dart::HomeDataRepository"
+
+class "mymoviesapp::Domain::UseCase::getMoviesDataUseCase.dart::GetMoviesDataUseCase" {
+  +HomeDataRepository repository
+  +Future<List<Movies>?> doWork()
+}
+
+"mymoviesapp::Domain::UseCase::getMoviesDataUseCase.dart::GetMoviesDataUseCase" o-- "mymoviesapp::Domain::Repository::Home_Data_Contract.dart::HomeDataRepository"
+
+class "mymoviesapp::Domain::UseCase::getSearchResultsUseCase.dart::GetSearchResultsUseCase" {
+  +SearchDataRepository repository
+  +Future<List<Movies>?> getSearchResults()
+}
+
+"mymoviesapp::Domain::UseCase::getSearchResultsUseCase.dart::GetSearchResultsUseCase" o-- "mymoviesapp::Domain::Repository::Search_Data_Contract.dart::SearchDataRepository"
+
+class "mymoviesapp::main.dart::MyApp" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mymoviesapp::main.dart::MyApp"
+
+class "mymoviesapp::Presentation::Home::HomeScreenView.dart::HomeScreen" {
+  {static} +String routeName
+  +State<HomeScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mymoviesapp::Presentation::Home::HomeScreenView.dart::HomeScreen"
+
+class "mymoviesapp::Presentation::Home::HomeScreenView.dart::_HomeScreenState" {
+  +int selectedIndex
+  +List<Widget> tabs
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "mymoviesapp::Presentation::Home::HomeScreenView.dart::_HomeScreenState"
+
+class "mymoviesapp::Presentation::Home::Tabs::Browse::BrowseTabView.dart::BrowseTabView" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mymoviesapp::Presentation::Home::Tabs::Browse::BrowseTabView.dart::BrowseTabView"
+
+class "mymoviesapp::Presentation::Home::Tabs::Home::HomeTabView.dart::HomeTabView" {
+  +State<HomeTabView> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mymoviesapp::Presentation::Home::Tabs::Home::HomeTabView.dart::HomeTabView"
+
+class "mymoviesapp::Presentation::Home::Tabs::Home::HomeTabView.dart::_HomeTabViewState" {
+  +HomeTabViewModel? viewModel
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"mymoviesapp::Presentation::Home::Tabs::Home::HomeTabView.dart::_HomeTabViewState" o-- "mymoviesapp::Presentation::Home::Tabs::Home::HomeTabViewModel.dart::HomeTabViewModel"
+"flutter::src::widgets::framework.dart::State" <|-- "mymoviesapp::Presentation::Home::Tabs::Home::HomeTabView.dart::_HomeTabViewState"
+
+class "mymoviesapp::Presentation::Home::Tabs::Home::HomeTabViewModel.dart::HomeTabViewModel" {
+  +List<Movies>? movies
+  +List<Movies>? actionMovies
+  +List<Movies>? dramaMovies
+  +List<Movies>? crimeMovies
+  +List<Movies>? animationMovies
+  +String? errorMessage
+  +GetMoviesDataUseCase getMoviesDataUseCase
+  +GetMoviesByGenreUseCase getMoviesByGenreUseCase
+  +Future<void> readData()
+  +Future<void> getTopRatedMovies()
+  +Future<void> getDramaMovies()
+  +Future<void> getActionMovies()
+  +Future<void> getCrimeMovies()
+  +Future<void> getAnimationMovies()
+}
+
+"mymoviesapp::Presentation::Home::Tabs::Home::HomeTabViewModel.dart::HomeTabViewModel" o-- "mymoviesapp::Domain::UseCase::getMoviesDataUseCase.dart::GetMoviesDataUseCase"
+"mymoviesapp::Presentation::Home::Tabs::Home::HomeTabViewModel.dart::HomeTabViewModel" o-- "mymoviesapp::Domain::UseCase::getMoviesByGenreUseCase.dart::GetMoviesByGenreUseCase"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "mymoviesapp::Presentation::Home::Tabs::Home::HomeTabViewModel.dart::HomeTabViewModel"
+
+class "mymoviesapp::Presentation::Home::Tabs::Home::Widgets::MoviesLists.dart::Movieslist" {
+  +List<Movies> movies
+  +String type
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mymoviesapp::Presentation::Home::Tabs::Home::Widgets::MoviesLists.dart::Movieslist"
+
+class "mymoviesapp::Presentation::Home::Tabs::Home::Widgets::MyPlaceHolder.dart::MyPlaceHolder" {
+  +List<int> placeholders
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mymoviesapp::Presentation::Home::Tabs::Home::Widgets::MyPlaceHolder.dart::MyPlaceHolder"
+
+class "mymoviesapp::Presentation::Home::Tabs::Home::Widgets::MyPlaceHolder.dart::PlaceHolderContainer" {
+  +double height
+  +double width
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mymoviesapp::Presentation::Home::Tabs::Home::Widgets::MyPlaceHolder.dart::PlaceHolderContainer"
+
+class "mymoviesapp::Presentation::Home::Tabs::Home::Widgets::PosterImage.dart::PosterImage" {
+  +Movies movie
+  +Widget build()
+}
+
+"mymoviesapp::Presentation::Home::Tabs::Home::Widgets::PosterImage.dart::PosterImage" o-- "mymoviesapp::Domain::Models::Movies.dart::Movies"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mymoviesapp::Presentation::Home::Tabs::Home::Widgets::PosterImage.dart::PosterImage"
+
+class "mymoviesapp::Presentation::Home::Tabs::Home::Widgets::TopRatedMovies.dart::TopRatedMovies" {
+  +List<Movies> movies
+  +State<TopRatedMovies> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mymoviesapp::Presentation::Home::Tabs::Home::Widgets::TopRatedMovies.dart::TopRatedMovies"
+
+class "mymoviesapp::Presentation::Home::Tabs::Home::Widgets::TopRatedMovies.dart::_TopRatedMoviesState" {
+  +String image
+  +void initState()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "mymoviesapp::Presentation::Home::Tabs::Home::Widgets::TopRatedMovies.dart::_TopRatedMoviesState"
+
+class "mymoviesapp::Presentation::Home::Tabs::Profile::ProfileTabVIew.dart::ProfileTabView" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "mymoviesapp::Presentation::Home::Tabs::Profile::ProfileTabVIew.dart::ProfileTabView"
+
+class "mymoviesapp::Presentation::Home::Tabs::Search::SearchTabView.dart::SearchTabView" {
+  +State<SearchTabView> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "mymoviesapp::Presentation::Home::Tabs::Search::SearchTabView.dart::SearchTabView"
+
+class "mymoviesapp::Presentation::Home::Tabs::Search::SearchTabView.dart::_SearchTabViewState" {
+  +ScrollController controller
+  +SearchTabViewModel viewModel
+  +Widget build()
+}
+
+"mymoviesapp::Presentation::Home::Tabs::Search::SearchTabView.dart::_SearchTabViewState" o-- "flutter::src::widgets::scroll_controller.dart::ScrollController"
+"mymoviesapp::Presentation::Home::Tabs::Search::SearchTabView.dart::_SearchTabViewState" o-- "mymoviesapp::Presentation::Home::Tabs::Search::SearchTabViewModel.dart::SearchTabViewModel"
+"flutter::src::widgets::framework.dart::State" <|-- "mymoviesapp::Presentation::Home::Tabs::Search::SearchTabView.dart::_SearchTabViewState"
+
+class "mymoviesapp::Presentation::Home::Tabs::Search::SearchTabViewModel.dart::SearchTabViewModel" {
+  +List<Movies>? movies
+  +String? errorMessage
+  +GetSearchResultsUseCase useCase
+  +Future<void> getSearchResults()
+}
+
+"mymoviesapp::Presentation::Home::Tabs::Search::SearchTabViewModel.dart::SearchTabViewModel" o-- "mymoviesapp::Domain::UseCase::getSearchResultsUseCase.dart::GetSearchResultsUseCase"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "mymoviesapp::Presentation::Home::Tabs::Search::SearchTabViewModel.dart::SearchTabViewModel"
+
+
+@enduml

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mymoviesapp/Core/Theme/Theme.dart';
 import 'package:mymoviesapp/Domain/UseCase/getSearchResultsUseCase.dart';
@@ -95,11 +96,41 @@ class _SearchTabViewState extends State<SearchTabView> {
                         child: ListView.builder(
                           controller: controller,
                           itemBuilder: (context, index) => Container(
-                            color: Colors.red,
-                            padding: const EdgeInsets.all(20),
-                            margin: const EdgeInsets.all(10),
-                            child: Center(
-                              child: Text(value.movies![index].title!),
+                            margin: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: MyTheme.blackThree,
+                              borderRadius: BorderRadius.circular(20)
+                            ),
+                            child: Row(
+                              children: [
+                                CachedNetworkImage(
+                                  imageUrl: value.movies![index].largeCoverImage!,
+                                  imageBuilder: (context, imageProvider) => ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.network(
+                                      value.movies![index].largeCoverImage!,
+                                      height: 200,
+                                    ),
+                                  ),
+                                  placeholder: (context, url) =>  ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.asset(
+                                      'assets/images/loading.jpg',
+                                      height: 200,
+                                    ),
+                                  )
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    height: 200,
+                                    color: Colors.red,
+                                    child: Column(
+                                      children: [
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                           itemCount: value.movies!.length,
